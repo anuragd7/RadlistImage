@@ -10,10 +10,14 @@ So you can still use template expressions, bindings, templates as well as all th
 The ActionBar is the NativeScript common abstraction over the Android ActionBar and iOS NavigationBar.
 http://docs.nativescript.org/ui/action-bar
 -->
-<ActionBar title="My App" class="action-bar">
-</ActionBar>
+<StackLayout>
 
-<!--
+    <ActionBar title="My App" class="action-bar">
+    </ActionBar>
+
+    <button text="Go to Detailed Page" (tap)="goToSecondlist()"></button>
+
+    <!--
 The StackLayout stacks UI components on the screen — either vertically or horizontally.
 In this case, the StackLayout does vertical stacking; you can change the stacking to
 horizontal by applying a orientation="horizontal" attribute to the <StackLayout> element.
@@ -23,7 +27,7 @@ These components make use of several CSS class names that are part of the Native
 core theme, such as p-20, btn, h2, and list-group. You can view a full list of the
 class names available for styling your app at https://docs.nativescript.org/ui/theme.
 -->
-<!-- <StackLayout class="page">
+    <!-- <StackLayout class="page">
     <ListView [items]="items" class="list-group">
         <ng-template let-item="item">
             <Label [nsRouterLink]="['/item', item.id]" [text]="item.name"
@@ -31,96 +35,99 @@ class names available for styling your app at https://docs.nativescript.org/ui/t
         </ng-template>
     </ListView>
 </StackLayout> -->
-<StackLayout>
-    <GridLayout columns="*, auto" rows="auto" class="searchbar-grid" horizontalAlignment="center" verticalAlignment="center" width="90%">
-        <TextField #sbcontent hint="Enter letter a and search" textAlignment="left" row="0" col="0" [text]="searchPhrase" (submit)="onSubmit(sbcontent.text)" id="searchbarid" returnKeyType="search" (returnPress)="onSubmit(sbcontent.text)"></TextField>
-        <Button row="0" col="1" (tap)="onSubmit(sbcontent.text)" text="SEARCH"></Button>
-    </GridLayout>
+    <Label text="Hello" class="upper" textWrap="true"></Label>
 
-    <GridLayout rows="*" class="m-x-10">
-        <RadListView *ngIf="searchResults" [items]="searchResults" [itemTemplateSelector]="templateSelector">
+    <StackLayout>
+        <GridLayout columns="*, auto" rows="auto" class="searchbar-grid" horizontalAlignment="center" verticalAlignment="center" width="90%">
+            <TextField #sbcontent hint="Enter letter a and search" textAlignment="left" row="0" col="0" [text]="searchPhrase" (submit)="onSubmit(sbcontent.text)" id="searchbarid" returnKeyType="search" (returnPress)="onSubmit(sbcontent.text)"></TextField>
+            <Button row="0" col="1" (tap)="onSubmit(sbcontent.text)" text="SEARCH"></Button>
+        </GridLayout>
 
-            <!--********************************MCQ Question************************************************************-->
-            <ng-template tkTemplateKey="questionMCQ" let-item="item">
-                <StackLayout>
-                    <GridLayout rows="auto auto auto" columns="4* 89* 7*" class="m-x-0 p-x-0">
-                        <Label text="{{item?.grades && item?.grades['0']}} .  {{item.subjectApplicable['0']}}" class="feed-tiny-text abel m-l-5 m-t-20" row="0" col="1" colSpan="2" textWrap="true"></Label>
-                        <Button *ngIf="item?.isAdvanced" row="0" col="2" horizontalAlignment="right" class="fa btn-tiny btn-border-none m-r-5 m-y-5" text="&#xf005;"></Button>
-                        <Label [text]="item?.questionText" class="font-16 m-x-5 m-t-10 m-b-5 p-y-2" row="1" col="1" colSpan="2" textWrap="true"></Label>
-                        <GridLayout row="2" col="1" rows="* auto" columns="1* 20* 1*" class="m-l-5">
-                            <Image *ngIf="item.questionImagesUrl" [src]="item.questionImagesUrl" row="0" col="1" class="img-question-thumbnail m-y-5" style="horizontal-align:center;" loadMode="async"></Image>
+        <GridLayout rows="*" class="m-x-10">
+            <RadListView *ngIf="searchResults" [items]="searchResults" [itemTemplateSelector]="templateSelector">
+
+                <!--********************************MCQ Question************************************************************-->
+                <ng-template tkTemplateKey="questionMCQ" let-item="item">
+                    <StackLayout>
+                        <GridLayout rows="auto auto auto" columns="4* 89* 7*" class="m-x-0 p-x-0">
+                            <Label text="{{item?.grades && item?.grades['0']}} .  {{item.subjectApplicable['0']}}" class="feed-tiny-text abel m-l-5 m-t-20" row="0" col="1" colSpan="2" textWrap="true"></Label>
+                            <Button *ngIf="item?.isAdvanced" row="0" col="2" horizontalAlignment="right" class="fa btn-tiny btn-border-none m-r-5 m-y-5" text="&#xf005;"></Button>
+                            <Label [text]="item?.questionText" class="font-16 m-x-5 m-t-10 m-b-5 p-y-2" row="1" col="1" colSpan="2" textWrap="true"></Label>
+                            <GridLayout row="2" col="1" rows="* auto" columns="1* 20* 1*" class="m-l-5">
+                                <Image *ngIf="item.questionImagesUrl" [src]="item.questionImagesUrl" row="0" col="1" class="img-question-thumbnail m-y-5" style="horizontal-align:center;" loadMode="async"></Image>
+                            </GridLayout>
                         </GridLayout>
-                    </GridLayout>
-                </StackLayout>
-            </ng-template>
+                    </StackLayout>
+                </ng-template>
 
-            <!--********************************MCQ with Image Question************************************************************-->
+                <!--********************************MCQ with Image Question************************************************************-->
 
-            <ng-template tkTemplateKey="questionMCQImage" let-item="item">
-                <StackLayout>
-                    <GridLayout rows="auto auto auto" columns="4* 89* 7*">
-                        <Label text="{{item?.grades && item?.grades['0']}} .  {{item.subjectApplicable['0']}}" class="feed-tiny-text abel m-l-5 m-t-20" row="0" col="1" colSpan="2" textWrap="true"></Label>
-                        <Button *ngIf="item?.isAdvanced" row="0" col="2" horizontalAlignment="right" class="fa btn-tiny btn-border-none m-r-5" text="&#xf005;"></Button>
-                        <Label [text]="item?.questionText" class="font-16 m-x-5 m-t-10 m-b-5 m-y-5" row="1" col="1" colSpan="2" textWrap="true"></Label>
+                <ng-template tkTemplateKey="questionMCQImage" let-item="item">
+                    <StackLayout>
+                        <GridLayout rows="auto auto auto" columns="4* 89* 7*">
+                            <Label text="{{item?.grades && item?.grades['0']}} .  {{item.subjectApplicable['0']}}" class="feed-tiny-text abel m-l-5 m-t-20" row="0" col="1" colSpan="2" textWrap="true"></Label>
+                            <Button *ngIf="item?.isAdvanced" row="0" col="2" horizontalAlignment="right" class="fa btn-tiny btn-border-none m-r-5" text="&#xf005;"></Button>
+                            <Label [text]="item?.questionText" class="font-16 m-x-5 m-t-10 m-b-5 m-y-5" row="1" col="1" colSpan="2" textWrap="true"></Label>
 
-                        <GridLayout row="2" col="1" rows="auto" columns="1* 20* 1*" class="m-y-5">
-                            <Image *ngIf="item.questionImagesUrl" [src]="item.questionImagesUrl" row="0" col="1" class="img-question-thumbnail" style="horizontal-align:center;" loadMode="async"></Image>
+                            <GridLayout row="2" col="1" rows="auto" columns="1* 20* 1*" class="m-y-5">
+                                <Image *ngIf="item.questionImagesUrl" [src]="item.questionImagesUrl" row="0" col="1" class="img-question-thumbnail" style="horizontal-align:center;" loadMode="async"></Image>
+                            </GridLayout>
                         </GridLayout>
-                    </GridLayout>
-                </StackLayout>
-            </ng-template>
+                    </StackLayout>
+                </ng-template>
 
-            !--******************************** VSA Question ************************************************************-->
-            <ng-template tkTemplateKey="questionVSA" let-item="item">
-                <StackLayout (tap)="onFeedItemSelect(item)">
-                    <GridLayout rows="auto auto auto auto" columns="4* 89* 7*">
-                        <Label text="{{item?.grades && item?.grades['0']}} .  {{item.subjectApplicable['0']}}" class="feed-tiny-text abel m-l-5 m-t-20" row="0" col="1" colSpan="2" textWrap="true"></Label>
-                        <Button *ngIf="item?.isAdvanced" row="0" col="2" horizontalAlignment="right" class="fa btn-tiny btn-border-none m-r-5" text="&#xf005;"></Button>
-                        <Label [text]="item?.questionText" class="label font-16 m-x-5 m-t-10 m-b-5 m-y-5" row="1" col="1" colSpan="2" textWrap="true"></Label>
-                        <Image *ngIf="item.questionImagesUrl" [src]="item.questionImagesUrl" row="2" col="1" class="img-question-thumbnail m-y-5" style="horizontal-align:center;" loadMode="async"></Image>
-                        <Label [text]="'Ans. '+item?.correctAnswer['0'].text" row="3" col="1" colSpan="2" class="font-14 p-r-l m-l-5 m-y-5" textWrap="true"></Label>
-                    </GridLayout>
-                </StackLayout>
-            </ng-template>
-
-            <!--******************************** LA Question ************************************************************-->
-            <ng-template tkTemplateKey="questionLA" let-item="item">
-                <StackLayout (tap)="onFeedItemSelect(item)">
-                    <GridLayout rows="auto auto auto auto" columns="4* 89* 7*">
-                        <Label text="{{item?.grades && item?.grades['0']}} .  {{item.subjectApplicable['0']}}" class="feed-tiny-text abel m-l-5 m-t-20" row="0" col="1" colSpan="2" textWrap="true"></Label>
-                        <Button *ngIf="item?.isAdvanced" row="0" col="2" horizontalAlignment="right" class="fa btn-tiny btn-border-none m-r-5" text="&#xf005;"></Button>
-                        <Label [text]="item?.questionText" class="label font-16 m-x-5 m-t-10 m-b-5 m-y-5" row="1" col="1" colSpan="2" textWrap="true"></Label>
-                        <Image *ngIf="item.questionImagesUrl" [src]="item.questionImagesUrl" row="2" col="1" class="img-question-thumbnail m-y-5" style="horizontal-align:center;" loadMode="async"></Image>
-                        <Label [text]="'Ans. '+item?.correctAnswer['0'].text" row="3" col="1" colSpan="2" class="font-14 p-r-l m-l-5 m-y-5" textWrap="true"></Label>
-                    </GridLayout>
-                </StackLayout>
-            </ng-template>
-
-            <!--******************************** MP Question ************************************************************-->
-            <ng-template tkTemplateKey="questionMP" let-item="item">
-                <StackLayout (tap)="onFeedItemSelect(item)">
-                    <GridLayout rows="auto auto auto auto auto" columns="4* 89* 7*">
-
-                        <Label text="{{item?.grades && item?.grades['0']}} .  {{item.subjectApplicable['0']}}" class="feed-tiny-text abel m-l-5 m-t-20" row="0" col="1" colSpan="2" textWrap="true"></Label>
-                        <Button *ngIf="item?.isAdvanced" row="0" col="2" horizontalAlignment="right" class="fa btn-tiny btn-border-none m-r-5" text="&#xf005;"></Button>
-
-
-                        <GridLayout *ngIf="item?.subQuestions && item?.subQuestions['0']?.questionType === 'questionMCQ'" row="3" col="1" rows="* auto" columns="1* 20* 1*" class="m-y-5">
-                            <Image *ngIf="item.questionImagesUrl" [src]="item.questionImagesUrl" row="0" col="1" class="img-question-thumbnail m-y-5" style="horizontal-align:center;" loadMode="async"></Image>
-                            <StackLayout row="1" col='0' colSpan="2" class="m-y-5 m-l-5">
-                                <Label [text]="'a. ' + item?.subQuestions['0']?.answerOptions.option1" class="font-14 m-x-5 m-y-1" textWrap="true"></Label>
-                                <Label [text]="'b. ' + item?.subQuestions['0']?.answerOptions.option2" class="font-14 m-x-5 m-y-1" textWrap="true"></Label>
-                            </StackLayout>
+                !--******************************** VSA Question ************************************************************-->
+                <ng-template tkTemplateKey="questionVSA" let-item="item">
+                    <StackLayout (tap)="onFeedItemSelect(item)">
+                        <GridLayout rows="auto auto auto auto" columns="4* 89* 7*">
+                            <Label text="{{item?.grades && item?.grades['0']}} .  {{item.subjectApplicable['0']}}" class="feed-tiny-text abel m-l-5 m-t-20" row="0" col="1" colSpan="2" textWrap="true"></Label>
+                            <Button *ngIf="item?.isAdvanced" row="0" col="2" horizontalAlignment="right" class="fa btn-tiny btn-border-none m-r-5" text="&#xf005;"></Button>
+                            <Label [text]="item?.questionText" class="label font-16 m-x-5 m-t-10 m-b-5 m-y-5" row="1" col="1" colSpan="2" textWrap="true"></Label>
+                            <Image *ngIf="item.questionImagesUrl" [src]="item.questionImagesUrl" row="2" col="1" class="img-question-thumbnail m-y-5" style="horizontal-align:center;" loadMode="async"></Image>
+                            <Label [text]="'Ans. '+item?.correctAnswer['0'].text" row="3" col="1" colSpan="2" class="font-14 p-r-l m-l-5 m-y-5" textWrap="true"></Label>
                         </GridLayout>
-                        <GridLayout *ngIf="item?.subQuestions && item?.subQuestions['0']?.questionType === 'questionMCQImage'" row="3" col="1" rows="auto" columns="1* 20* 1*" class="m-y-5 m-l-5">
-                            <Image *ngIf="item?.subQuestions['0']?.questionImagesUrl" [src]="item.questionImagesUrl" row="0" col="1" class="img-question-thumbnail" style="horizontal-align:center;" loadMode="async"></Image>
-                        </GridLayout>
-                        <Label *ngIf="item?.subQuestions && (item?.subQuestions['0']?.questionType === 'questionVSA' || item?.subQuestions['0']?.questionType === 'questionLA')" [text]="'Answer. '+item?.subQuestions['0']?.correctAnswer['0']?.text" row="3" col="1" colSpan="2"
-                            class=" font-16 m-x-5 m-y-5" textWrap="true"></Label>
-                    </GridLayout>
-                </StackLayout>
-            </ng-template>
+                    </StackLayout>
+                </ng-template>
 
-        </RadListView>
-    </GridLayout>
+                <!--******************************** LA Question ************************************************************-->
+                <ng-template tkTemplateKey="questionLA" let-item="item">
+                    <StackLayout (tap)="onFeedItemSelect(item)">
+                        <GridLayout rows="auto auto auto auto" columns="4* 89* 7*">
+                            <Label text="{{item?.grades && item?.grades['0']}} .  {{item.subjectApplicable['0']}}" class="feed-tiny-text abel m-l-5 m-t-20" row="0" col="1" colSpan="2" textWrap="true"></Label>
+                            <Button *ngIf="item?.isAdvanced" row="0" col="2" horizontalAlignment="right" class="fa btn-tiny btn-border-none m-r-5" text="&#xf005;"></Button>
+                            <Label [text]="item?.questionText" class="label font-16 m-x-5 m-t-10 m-b-5 m-y-5" row="1" col="1" colSpan="2" textWrap="true"></Label>
+                            <Image *ngIf="item.questionImagesUrl" [src]="item.questionImagesUrl" row="2" col="1" class="img-question-thumbnail m-y-5" style="horizontal-align:center;" loadMode="async"></Image>
+                            <Label [text]="'Ans. '+item?.correctAnswer['0'].text" row="3" col="1" colSpan="2" class="font-14 p-r-l m-l-5 m-y-5" textWrap="true"></Label>
+                        </GridLayout>
+                    </StackLayout>
+                </ng-template>
+
+                <!--******************************** MP Question ************************************************************-->
+                <ng-template tkTemplateKey="questionMP" let-item="item">
+                    <StackLayout (tap)="onFeedItemSelect(item)">
+                        <GridLayout rows="auto auto auto auto auto" columns="4* 89* 7*">
+
+                            <Label text="{{item?.grades && item?.grades['0']}} .  {{item.subjectApplicable['0']}}" class="feed-tiny-text abel m-l-5 m-t-20" row="0" col="1" colSpan="2" textWrap="true"></Label>
+                            <Button *ngIf="item?.isAdvanced" row="0" col="2" horizontalAlignment="right" class="fa btn-tiny btn-border-none m-r-5" text="&#xf005;"></Button>
+
+
+                            <GridLayout *ngIf="item?.subQuestions && item?.subQuestions['0']?.questionType === 'questionMCQ'" row="3" col="1" rows="* auto" columns="1* 20* 1*" class="m-y-5">
+                                <Image *ngIf="item.questionImagesUrl" [src]="item.questionImagesUrl" row="0" col="1" class="img-question-thumbnail m-y-5" style="horizontal-align:center;" loadMode="async"></Image>
+                                <StackLayout row="1" col='0' colSpan="2" class="m-y-5 m-l-5">
+                                    <Label [text]="'a. ' + item?.subQuestions['0']?.answerOptions.option1" class="font-14 m-x-5 m-y-1" textWrap="true"></Label>
+                                    <Label [text]="'b. ' + item?.subQuestions['0']?.answerOptions.option2" class="font-14 m-x-5 m-y-1" textWrap="true"></Label>
+                                </StackLayout>
+                            </GridLayout>
+                            <GridLayout *ngIf="item?.subQuestions && item?.subQuestions['0']?.questionType === 'questionMCQImage'" row="3" col="1" rows="auto" columns="1* 20* 1*" class="m-y-5 m-l-5">
+                                <Image *ngIf="item?.subQuestions['0']?.questionImagesUrl" [src]="item.questionImagesUrl" row="0" col="1" class="img-question-thumbnail" style="horizontal-align:center;" loadMode="async"></Image>
+                            </GridLayout>
+                            <Label *ngIf="item?.subQuestions && (item?.subQuestions['0']?.questionType === 'questionVSA' || item?.subQuestions['0']?.questionType === 'questionLA')" [text]="'Answer. '+item?.subQuestions['0']?.correctAnswer['0']?.text" row="3" col="1" colSpan="2"
+                                class=" font-16 m-x-5 m-y-5" textWrap="true"></Label>
+                        </GridLayout>
+                    </StackLayout>
+                </ng-template>
+
+            </RadListView>
+        </GridLayout>
+    </StackLayout>
 </StackLayout>
